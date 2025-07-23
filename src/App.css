@@ -1,127 +1,273 @@
-/* src/App.css */
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
-  margin: 0;
-}
-
 .App {
-  text-align: center;
-}
-
-.App-header {
-  background-color: #1e1e1e;
   padding: 20px;
-  color: white;
-  border-bottom: 4px solid #d20a0a;
-}
-
-main {
-  padding: 20px;
-}
-
-/* Event List */
-.event-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Event Card */
+.App-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.event-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
 .event-card {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: left;
-}
-
-.event-card h3 {
-  margin-top: 0;
-}
-
-.status {
-  font-weight: bold;
-  padding: 4px 8px;
-  border-radius: 4px;
-  color: white;
-}
-
-.status.upcoming { background-color: #007bff; }
-.status.happening-now { background-color: #d20a0a; }
-.status.finished { background-color: #6c757d; }
-
-/* Reminder Section */
-.reminder-section {
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #eee;
-}
-
-.reminder-display p {
-  background-color: #fffbe6;
-  border-left: 4px solid #ffc107;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.event-card.closest-event {
-  border: 2px solid #d20a0a;
-  box-shadow: 0 4px 12px rgba(210, 10, 10, 0.3);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: white;
   position: relative;
-  overflow: hidden;
 }
 
-/* Style for the "NEXT UP" badge */
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.closest-event {
+  border-left: 5px solid #ff9800;
+  background-color: #fffaf0;
+}
+
 .closest-badge {
   position: absolute;
   top: 10px;
-  right: -35px;
-  background-color: #d20a0a;
+  right: 10px;
+  background-color: #ff9800;
   color: white;
-  padding: 5px 30px;
-  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
   font-weight: bold;
-  transform: rotate(45deg);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-/* Forms and Buttons */
-input[type="text"] {
-  width: calc(100% - 20px);
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
 }
 
-button {
-  background-color: #007bff;
+.status {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  margin-top: 10px;
+}
+
+.status.scheduled {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status.cancelled {
+  background-color: #f44336;
+  color: white;
+}
+
+.status.postponed {
+  background-color: #ff9800;
+  color: white;
+}
+
+.reminder-section {
+  margin-top: 15px;
+}
+
+.reminder-section button {
+  padding: 8px 15px;
+  background-color: #2196f3;
   color: white;
   border: none;
-  padding: 10px 15px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
-  margin-right: 5px;
+  transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #0056b3;
+.reminder-section button:hover {
+  background-color: #0b7dda;
 }
 
-button.delete-btn, button.cancel-btn {
-  background-color: #6c757d;
+.reminder-form {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 25px;
+  margin: 30px 0;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-button.delete-btn:hover, button.cancel-btn:hover {
-  background-color: #5a6268;
+.reminder-form h2 {
+  margin-top: 0;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
 }
 
-.error-message {
-  color: #d20a0a;
-  font-weight: bold;
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.form-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.3s;
+}
+
+.form-actions button:hover {
+  opacity: 0.9;
+}
+
+.save-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.reminders-list {
+  margin-top: 40px;
+}
+
+.reminders-list h2 {
+  color: #333;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+}
+
+.no-reminders {
+  text-align: center;
+  color: #777;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.reminders-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 25px;
+}
+
+.reminder-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+  transition: transform 0.3s;
+}
+
+.reminder-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+.reminder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.reminder-header h3 {
+  margin: 0;
+  color: #2196f3;
+}
+
+.event-name {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.reminder-description {
+  color: #555;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.reminder-details div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #eee;
+}
+
+.reminder-details div:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.reminder-details strong {
+  color: #333;
+}
+
+.reminder-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.reminder-actions button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.3s;
+  flex: 1;
+}
+
+.reminder-actions button:hover {
+  opacity: 0.9;
+}
+
+.edit-btn {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
 }

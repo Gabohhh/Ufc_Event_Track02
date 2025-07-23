@@ -1,59 +1,59 @@
 // src/api/ufcApi.js
 
-// The URL for the real, external ESPN API for the UFC scoreboard.
+// La URL para la API externa real de ESPN para el marcador de la UFC.
 const API_URL = "https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard";
 
-// This function maps the status from the ESPN API to a more user-friendly format.
+// Esta función mapea el estado de la API de ESPN a un formato más amigable para el usuario.
 const getEventStatus = (statusType) => {
   switch (statusType) {
     case "STATUS_SCHEDULED":
-      return "Upcoming";
+      return "Próximo";
     case "STATUS_IN_PROGRESS":
-      return "Happening Now";
+      return "En Curso";
     case "STATUS_FINAL":
-      return "Finished";
+      return "Finalizado";
     default:
-      return "Scheduled";
+      return "Programado";
   }
 };
 
-// This is the main function that fetches and processes the data.
-// It connects to an external API as required by the assignment.
+// esta es la función que se trae y procesa la información de la API
+// Se conecta a una API externa como lo requiere la tarea.
 export const fetchEvents = async () => {
-  console.log("Fetching events from ESPN API...");
+  console.log("Obteniendo eventos de la API de ESPN...");
   try {
-    // Use the Fetch API to make a network request to the external URL.
+    // Usa la API Fetch para hacer una solicitud de red a la URL externa.
     const response = await fetch(API_URL);
 
-    // This handles errors in case the API response is not successful (e.g., 404 Not Found).
+    // Esto maneja errores en caso de que la respuesta de la API no sea exitosa (ej. 404 No Encontrado).
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`¡Error HTTP! estado: ${response.status}`);
     }
 
     const data = await response.json();
 
-    // The API data is nested inside `data.events`. We check if it exists.
+    // Los datos de la API están anidados dentro de `data.events`. Verificamos si existen.
     if (!data.events) {
-      return []; // Return an empty array if there are no events.
+      return []; // Devuelve un arreglo vacío si no hay eventos.
     }
 
-    // Process the raw API data into the simplified format our app uses.
-    // This makes the rest of our application independent of the complex API structure.
+    // Procesa los datos crudos de la API al formato simplificado que usa nuestra aplicación.
+    // Esto hace que el resto de nuestra aplicación sea independiente de la compleja estructura de la API.
     const processedEvents = data.events.map((event) => {
       return {
-        id: event.id, // The unique ID for the event.
-        name: event.name, // The full name of the event, e.g., "UFC 305".
-        date: event.date.split("T")[0], // Keep only the date part (YYYY-MM-DD).
-        status: getEventStatus(event.status.type.name), // Get our custom status string.
+        id: event.id, // El ID único para el evento.
+        name: event.name, // El nombre completo del evento, ej. "UFC 305".
+        date: event.date.split("T")[0], // Conserva solo la parte de la fecha (AAAA-MM-DD).
+        status: getEventStatus(event.status.type.name), // Obtiene nuestra cadena de estado personalizada.
       };
     });
 
     return processedEvents;
 
   } catch (error) {
-    // This catches network errors or errors from a failed request.
-    console.error("Failed to fetch events from ESPN API:", error);
-    // Re-throw the error so the calling component (App.js) knows the request failed.
+    // Esto captura errores de red o errores de una solicitud fallida.
+    console.error("Fallo al obtener eventos de la API de ESPN:", error);
+    // Vuelve a lanzar el error para que el componente que llama (App.js) sepa que la solicitud falló.
     throw error;
   }
 };

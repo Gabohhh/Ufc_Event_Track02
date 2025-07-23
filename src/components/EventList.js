@@ -13,7 +13,7 @@ function EventList({ events, reminders, onSaveReminder, onDeleteReminder, closes
           reminder={reminders[event.id]}
           onSaveReminder={onSaveReminder}
           onDeleteReminder={onDeleteReminder}
-          // Pass a boolean to EventCard if it's the closest one.
+          // pasa booleano si es el evento mas cercano
           isClosest={event.id === closestEventId}
         />
       ))}
